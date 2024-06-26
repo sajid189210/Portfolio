@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="contact-response-style.css">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .contact-form {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #ffffff;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.875em;
+        }
+    </style>
+    <title>Contact Us</title>
+</head>
+
+<body>
+
+    <div class="contact-form">
+        <form id="submit-form" action="">
+            <h1 class="text-center mb-4">Contact Us</h1>
+            <div class="mb-3">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="firstName">
+                <span id="fNameError" class="error"></span>
+
+            </div>
+            <div class="mb-3">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="lastName">
+                <span id="lNameError" class="error"></span>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" name="email">
+                <span id="emailError" class="error"></span>
+            </div>
+            <div class="mb-3">
+                <label for="contacts" class="form-label">Contacts</label>
+                <input type="text" class="form-control" id="contacts" name="contacts" pattern="[7-9]{1}[0-9]{9}">
+                <span id="contactError" class="error"></span>
+
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">Write your message</label><span id="messageError"
+                    class="error"></span>
+                <textarea class="form-control" id="message" name="message" rows="4"></textarea>
+
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- validation -->
+    <script>
+        document.getElementById('submit-form').addEventListener('submit', validateForm);
+
+        function validateForm(e) {
+            e.preventDefault();
+
+            // Reset error messages
+            document.getElementById('fNameError').innerHTML = "";
+            document.getElementById('lNameError').innerHTML = "";
+            document.getElementById('emailError').innerHTML = "";
+            document.getElementById('contactError').innerHTML = "";
+            document.getElementById('messageError').innerHTML = "";
+
+
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const contacts = document.getElementById('contacts').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+
+            const namePattern = /^[a-zA-Z\s]+$/;
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+            const contactPattern = /^[7-9]\d{9}$/;
+
+
+            let isValid = true;
+
+            // Name validation
+            if (firstName === "") {
+                document.getElementById('fNameError').innerHTML = "Must enter your First Name.";
+                isValid = false;
+            } else if (!namePattern.test(firstName)) {
+                document.getElementById('fNameError').innerHTML = "Must enter valid name[a-z,A-Z].";
+                isValid = false;
+            }
+
+            if (lastName === "") {
+                document.getElementById('lNameError').innerHTML = "Must enter your Last Name.";
+                isValid = false;
+            } else if (!namePattern.test(lastName)) {
+                document.getElementById('lNameError').innerHTML = "Must enter valid name[a-z,A-Z].";
+                isValid = false;
+            }
+
+            // Email validation
+            if (email === "") {
+                document.getElementById('emailError').innerHTML = "Must enter your Email.";
+                isValid = false;
+            } else if (!emailPattern.test(email)) {
+                document.getElementById('emailError').innerHTML = "Must enter valid Email format, someone@gmail.com";
+                isValid = false;
+            }
+
+            //contact validation
+            if (contacts === "") {
+                document.getElementById('contactError').innerHTML = "Must enter your contact details.";
+                isValid = false;
+            } else if (!contactPattern.test(contacts)) {
+                document.getElementById('contactError').innerHTML = "Must enter valid number.";
+                isValid = false;
+            }
+
+            //message validation
+            if (message === "") {
+                document.getElementById('contactError').innerHTML = "Must enter your contact details.";
+                isValid = false;
+            }
+
+        }
+
+        if (isValid) {
+            // If the form is valid, submit it via AJAX
+            $.ajax({
+                url: "https://script.google.com/macros/s/AKfycbwFYi3_397AfLaXkc59oiMVs1zUBt5Dh0pFhUCK4BcV9mYQ1iSeRibWpej0jClv0hBn/exec",
+                data: $("#submit-form").serialize(),
+                method: "POST",
+                success: function (response) {
+                    alert("Form submitted successfully");
+                    window.location.reload();
+                    window.location.href = "index.html";
+                },
+                error: function (err) {
+                    alert("Something went wrong");
+                }
+            });
+        }
+
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
