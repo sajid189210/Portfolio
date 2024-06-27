@@ -835,3 +835,8 @@ p {
 }
 
 /* End  Media Query For Desktop */
+
+.project-link {
+	color: #fff;
+	text-decoration: underline;
+}

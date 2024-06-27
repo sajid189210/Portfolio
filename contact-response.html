@@ -88,18 +88,15 @@
             document.getElementById('contactError').innerHTML = "";
             document.getElementById('messageError').innerHTML = "";
 
-
             const firstName = document.getElementById('firstName').value.trim();
             const lastName = document.getElementById('lastName').value.trim();
             const email = document.getElementById('email').value.trim();
             const contacts = document.getElementById('contacts').value.trim();
             const message = document.getElementById('message').value.trim();
 
-
             const namePattern = /^[a-zA-Z\s]+$/;
             const emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
             const contactPattern = /^[7-9]\d{9}$/;
-
 
             let isValid = true;
 
@@ -129,7 +126,7 @@
                 isValid = false;
             }
 
-            //contact validation
+            // Contact validation
             if (contacts === "") {
                 document.getElementById('contactError').innerHTML = "Must enter your contact details.";
                 isValid = false;
@@ -138,29 +135,28 @@
                 isValid = false;
             }
 
-            //message validation
+            // Message validation
             if (message === "") {
                 document.getElementById('messageError').innerHTML = "Tell me what you need.";
                 isValid = false;
             }
 
-        }
-
-        if (isValid) {
-            // If the form is valid, submit it via AJAX
-            $.ajax({
-                url: "https://script.google.com/macros/s/AKfycbwFYi3_397AfLaXkc59oiMVs1zUBt5Dh0pFhUCK4BcV9mYQ1iSeRibWpej0jClv0hBn/exec",
-                data: $("#submit-form").serialize(),
-                method: "POST",
-                success: function (response) {
-                    alert("Form submitted successfully");
-                    window.location.reload();
-                    window.location.href = "index.html";
-                },
-                error: function (err) {
-                    alert("Something went wrong");
-                }
-            });
+            if (isValid) {
+                // If the form is valid, submit it via AJAX
+                $.ajax({
+                    url: "https://script.google.com/macros/s/AKfycbwFYi3_397AfLaXkc59oiMVs1zUBt5Dh0pFhUCK4BcV9mYQ1iSeRibWpej0jClv0hBn/exec",
+                    data: $("#submit-form").serialize(),
+                    method: "POST",
+                    success: function (response) {
+                        alert("Message sent successfully.");
+                        window.location.reload();
+                        window.location.href = "index.html";
+                    },
+                    error: function (err) {
+                        alert("Something went wrong");
+                    }
+                });
+            }
         }
 
 
